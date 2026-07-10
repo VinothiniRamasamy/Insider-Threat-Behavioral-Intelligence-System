@@ -35,8 +35,11 @@ Unique Receivers - Different Email Receivers
 ⚙ How It Works
 
 1.The user enters the above 9 details on the React frontend.
+
 2.This data is sent to the FastAPI backend.
+
 3.The Random Forest model in the backend processes the data and returns the prediction result (Normal / Insider Threat).
+
 4.The result is displayed on the frontend dashboard.
 
 📸 Sample Result
