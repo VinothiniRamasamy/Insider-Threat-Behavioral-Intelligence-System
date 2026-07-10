@@ -11,14 +11,14 @@ ML Model: Trained a Random Forest Classifier model using employee behavioral dat
 Prediction Logic: When 9 behavioral details are provided as input, the data is sent to the model, which predicts whether the user is a Normal User or an Insider Threat and returns the output.
 
 📊 9 Behavioral Features Given as Input 
-HTTP Count - Website Requests
-After Hours - Activity Outside Office Hours
-Unique PC - Different Systems Used
-Unique URL - Different Websites Visited
-Logon Count - Login Frequency
-Device Count - USB Devices Connected
-File Count - Files Accessed
-Email Count - Emails Sent
+HTTP Count - Website Requests , 
+After Hours - Activity Outside Office Hours ,
+Unique PC - Different Systems Used ,
+Unique URL - Different Websites Visited ,
+Logon Count - Login Frequency ,
+Device Count - USB Devices Connected ,
+File Count - Files Accessed ,
+Email Count - Emails Sent ,
 Unique Receivers - Different Email Receivers
 
 ⚙ How It Works
