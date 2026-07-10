@@ -31,7 +31,9 @@ Unique Receivers - Different Email Receivers
 📸 Sample Result
 
 Prediction Output:
+
 Prediction : Normal User
+
 Confidence : 52%
 
 Explainable AI (SHAP) Output – shows which features contributed most to the prediction:
