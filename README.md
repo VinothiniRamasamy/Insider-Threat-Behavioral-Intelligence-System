@@ -69,3 +69,13 @@ So basically, after the user enters the 9 details, the dashboard shows:
 2.Confidence Score – how confident the model is about that prediction (in %)
 
 3.Feature Importance – which behavioral features (like logon_count, device_activity, etc.) influenced the prediction the most, using SHAP values
+
+📝 Yet to Be Done
+
+1.User Authentication (Login Page) – Add a login page so only authorized users can access the dashboard.
+
+2.Input Validation – Add checks so wrong/empty values aren't accepted for the 9 features.
+
+3.History/Logs Page – Store past predictions in a database to view them later.
+
+4.Error Handling – Show proper error messages on the frontend if the backend API fails.
