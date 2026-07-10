@@ -1,0 +1,19 @@
+# Dataset (large files)
+dataset/
+*.csv
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+
+# React dependencies
+frontend/node_modules/
+
+# Logs
+*.log
+
+# Jupyter notebooks
+notebook/
