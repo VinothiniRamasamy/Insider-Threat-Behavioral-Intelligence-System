@@ -1,81 +1,105 @@
 # Insider-Threat-Behavioral-Intelligence-System
 
-🚀 Project Overview
-This project is developed to detect insider threats by analyzing employee behavioral activity logs. Using a Machine Learning (Random Forest) model, it predicts whether an employee's behavior is Normal or an Insider Threat.
+Project Overview:
 
-✅ What Has Been Done So Far
+The Insider Threat Behavioral Intelligence System is an AI-powered web application that detects potential insider threats by analyzing employee behavioral activities. The system uses a Random Forest Classifier to classify employee behavior as Normal User or Insider Threat and provides Explainable AI (SHAP) insights to explain each prediction.
 
-Backend: Built a REST API using FastAPI in Python.
+Project Objectives:
 
-Frontend: Built a dashboard using React.js that calls the backend API and displays the result.
+Analyze employee behavioral activities.
+Detect insider threats using Machine Learning.
+Provide real-time predictions through a web application.
+Explain prediction results using SHAP Explainable AI.
+Assist organizations in identifying suspicious employee behavior.
 
-ML Model: Trained a Random Forest Classifier model using employee behavioral data to make predictions.
+Current Progress
 
-Prediction Logic: When 9 behavioral details are provided as input, the data is sent to the model, which predicts whether the user is a Normal User or an Insider Threat and returns the output.
+Week 1 – Machine Learning Development
 
-📊 9 Behavioral Features Given as Input 
-HTTP Count - Website Requests , 
+Completed work:
 
-After Hours - Activity Outside Office Hours ,
+Collected and preprocessed employee behavioral data.
+Performed feature engineering.
+Built the final training dataset.
+Trained a Random Forest Classifier.
+Evaluated the model and generated prediction results.
+Saved the trained model for deployment.
 
-Unique PC - Different Systems Used ,
+Week 2 – Application Development
 
-Unique URL - Different Websites Visited ,
+Completed work:
 
-Logon Count - Login Frequency ,
+Developed the backend using FastAPI.
+Built the frontend dashboard using React.js.
+Connected the frontend with the backend API.
+Integrated the trained ML model.
+Implemented real-time prediction.
+Added SHAP Explainable AI.
+Displayed prediction results, confidence score, and feature importance on the dashboard.
 
-Device Count - USB Devices Connected ,
+Input Features
+The prediction model currently uses the following 9 behavioral features:
 
-File Count - Files Accessed ,
+HTTP Count
+After Hours
+Unique PC
+Unique URL
+Logon Count
+Device Count
+File Count
+Email Count
+Unique Receivers
 
-Email Count - Emails Sent ,
+Prediction Workflow:
 
-Unique Receivers - Different Email Receivers
+User enters the 9 behavioral feature values.
+The React frontend sends the data to the FastAPI backend.
+The Random Forest model processes the input.
 
-⚙ How It Works
+The system predicts whether the employee is:
+Normal User
+Insider Threat
 
-1.The user enters the above 9 details on the React frontend.
+SHAP calculates the contribution of each feature.
+The dashboard displays the prediction result.
 
-2.This data is sent to the FastAPI backend.
+Sample Output:
+Prediction Result
 
-3.The Random Forest model in the backend processes the data and returns the prediction result (Normal / Insider Threat).
+Prediction: Normal User
+Confidence Score: 52%
 
-4.The result is displayed on the frontend dashboard.
+SHAP Feature Importance
 
-📸 Sample Result
+The dashboard also displays the most influential features used by the model.
 
-Prediction Output:
+Example:
 
-Prediction : Normal User
+Logon Count – 0.2410
+Device Activity – 0.0977
+Unique Files – 0.0839
+File Count – 0.0784
+Unique Receivers – 0.0783
 
-Confidence : 52%
+These values help explain why the model classified the employee as a Normal User or Insider Threat.
 
-Explainable AI (SHAP) Output – shows which features contributed most to the prediction:
+Ongoing Development
 
-logon_count         0.241
+The following features are currently under development:
 
-device_activity     0.0977
+User Authentication (Login)
+Input Validation
+Prediction History
+PostgreSQL Database Integration
+Error Handling
+Dashboard UI Enhancements
 
-unique_files        0.0839
+Future Enhancements:
 
-file_count          0.0784
-
-unique_receivers    0.0783
-
-So basically, after the user enters the 9 details, the dashboard shows:
-
-1.Prediction – whether the user is a "Normal User" or "Insider Threat"
-
-2.Confidence Score – how confident the model is about that prediction (in %)
-
-3.Feature Importance – which behavioral features (like logon_count, device_activity, etc.) influenced the prediction the most, using SHAP values
-
-📝 Yet to Be Done
-
-1.User Authentication (Login Page) – Add a login page so only authorized users can access the dashboard.
-
-2.Input Validation – Add checks so wrong/empty values aren't accepted for the 9 features.
-
-3.History/Logs Page – Store past predictions in a database to view them later.
-
-4.Error Handling – Show proper error messages on the frontend if the backend API fails.
+Risk Score Dashboard
+User Role-Based Access Control
+Prediction History Reports
+Advanced Data Visualization
+Model Performance Optimization
+Cloud Deployment
+Final Documentation and Testing
