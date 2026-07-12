@@ -1,10 +1,10 @@
 # Insider-Threat-Behavioral-Intelligence-System
 
-Project Overview:
+## Project Overview:
 
 The Insider Threat Behavioral Intelligence System is an AI-powered web application that detects potential insider threats by analyzing employee behavioral activities. The system uses a Random Forest Classifier to classify employee behavior as Normal User or Insider Threat and provides Explainable AI (SHAP) insights to explain each prediction.
 
-Project Objectives:
+## Project Objectives:
 
 Analyze employee behavioral activities.
 
@@ -16,11 +16,11 @@ Explain prediction results using SHAP Explainable AI.
 
 Assist organizations in identifying suspicious employee behavior.
 
-Current Progress
+## Current Progress
 
-Week 1 – Machine Learning Development
+# Week 1 – Machine Learning Development
 
-Completed work:
+# Completed work:
 
 Collected and preprocessed employee behavioral data.
 
@@ -34,9 +34,9 @@ Evaluated the model and generated prediction results.
 
 Saved the trained model for deployment.
 
-Week 2 – Application Development
+# Week 2 – Application Development
 
-Completed work:
+# Completed work:
 
 Developed the backend using FastAPI.
 
@@ -52,7 +52,7 @@ Added SHAP Explainable AI.
 
 Displayed prediction results, confidence score, and feature importance on the dashboard.
 
-Input Features
+## Input Features
 The prediction model currently uses the following 9 behavioral features:
 
 HTTP Count
@@ -73,7 +73,7 @@ Email Count
 
 Unique Receivers
 
-Prediction Workflow:
+## Prediction Workflow:
 
 User enters the 9 behavioral feature values.
 
@@ -81,7 +81,7 @@ The React frontend sends the data to the FastAPI backend.
 
 The Random Forest model processes the input.
 
-The system predicts whether the employee is:
+## The system predicts whether the employee is:
 
 Normal User or 
 
@@ -91,8 +91,8 @@ SHAP calculates the contribution of each feature.
 
 The dashboard displays the prediction result.
 
-Sample Output:
-Prediction Result
+## Sample Output:
+# Prediction Result
 
 Prediction: Normal User
 
@@ -102,7 +102,7 @@ SHAP Feature Importance
 
 The dashboard also displays the most influential features used by the model.
 
-Example:
+# Example:
 
 Logon Count – 0.2410
 
@@ -118,7 +118,7 @@ These values help explain why the model classified the employee as a Normal User
 
 Ongoing Development
 
-The following features are currently under development:
+## The following features are currently under development:
 
 User Authentication (Login)
 
@@ -132,7 +132,7 @@ Error Handling
 
 Dashboard UI Enhancements
 
-Future Enhancements:
+## Future Enhancements:
 
 Risk Score Dashboard
 
