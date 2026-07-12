@@ -18,9 +18,9 @@ Assist organizations in identifying suspicious employee behavior.
 
 ## Current Progress
 
-# Week 1 – Machine Learning Development
+## Week 1 – Machine Learning Development
 
-# Completed work:
+## Completed work:
 
 Collected and preprocessed employee behavioral data.
 
@@ -34,9 +34,9 @@ Evaluated the model and generated prediction results.
 
 Saved the trained model for deployment.
 
-# Week 2 – Application Development
+## Week 2 – Application Development
 
-# Completed work:
+## Completed work:
 
 Developed the backend using FastAPI.
 
@@ -92,7 +92,7 @@ SHAP calculates the contribution of each feature.
 The dashboard displays the prediction result.
 
 ## Sample Output:
-# Prediction Result
+## Prediction Result
 
 Prediction: Normal User
 
@@ -102,7 +102,7 @@ SHAP Feature Importance
 
 The dashboard also displays the most influential features used by the model.
 
-# Example:
+## Example:
 
 Logon Count – 0.2410
 
