@@ -1,149 +1,219 @@
 # Insider-Threat-Behavioral-Intelligence-System
 
-## Project Overview:
+## 📌 Project Overview
 
-The Insider Threat Behavioral Intelligence System is an AI-powered web application that detects potential insider threats by analyzing employee behavioral activities. The system uses a Random Forest Classifier to classify employee behavior as Normal User or Insider Threat and provides Explainable AI (SHAP) insights to explain each prediction.
+The Insider Threat Behavioral Intelligence System is an AI-powered web application designed to detect potential insider threats by analyzing employee behavioral activities. The system leverages Machine Learning (Random Forest Classifier) to classify employee behavior as either Normal User or Insider Threat. Additionally, it uses SHAP (SHapley Additive Explanations) to explain the reasoning behind every prediction, making the model transparent and interpretable.
 
-## Project Objectives:
+## 🎯 Project Objectives
 
 Analyze employee behavioral activities.
 
-Detect insider threats using Machine Learning.
+Detect potential insider threats using Machine Learning.
 
 Provide real-time predictions through a web application.
 
 Explain prediction results using SHAP Explainable AI.
 
-Assist organizations in identifying suspicious employee behavior.
+Help organizations identify suspicious employee behavior at an early stage.
 
-## Current Progress
+## 📂 Dataset
 
-## Week 1 – Machine Learning Development
+This project uses the CERT Insider Threat Dataset, which contains simulated employee activity logs.
 
-## Completed work:
+The dataset includes:
 
-Collected and preprocessed employee behavioral data.
+HTTP Activity
 
-Performed feature engineering.
+Logon Activity
 
-Built the final training dataset.
+Device Usage
 
-Trained a Random Forest Classifier.
+File Access
 
-Evaluated the model and generated prediction results.
+Email Communication
 
-Saved the trained model for deployment.
+Insider User Labels
 
-## Week 2 – Application Development
+These logs are processed to generate behavioral features for machine learning.
 
-## Completed work:
+## ⚙️ Machine Learning Workflow
+Raw CERT Dataset
+        │
+        ▼
+Data Preprocessing
+        │
+        ▼
+Feature Engineering
+        │
+        ▼
+Training Dataset
+        │
+        ▼
+Random Forest Model
+        │
+        ▼
+Prediction
+        │
+        ▼
+SHAP Explainable AI
+        │
+        ▼
+React Dashboard
 
-Developed the backend using FastAPI.
+## 📊 Current Progress
+## ✅ Week 1 – Machine Learning Development
 
-Built the frontend dashboard using React.js.
+Completed:
 
-Connected the frontend with the backend API.
+Data Collection. 
 
-Integrated the trained ML model.
+Data Preprocessing
 
-Implemented real-time prediction.
+Feature Engineering
 
-Added SHAP Explainable AI.
+Model Training
 
-Displayed prediction results, confidence score, and feature importance on the dashboard.
+Model Evaluation
 
-## Input Features
-The prediction model currently uses the following 9 behavioral features:
+Random Forest Classification
 
-HTTP Count
+Model Serialization
 
-After Hours
+SHAP Analysis
 
-Unique PC
+## ✅ Week 2 – Application Development
 
-Unique URL
+Completed:
 
-Logon Count
+FastAPI Backend
 
-Device Count
+React Frontend
 
-File Count
+API Integration
 
-Email Count
+Real-time Prediction
 
-Unique Receivers
+SHAP Integration
 
-## Prediction Workflow:
+Confidence Score Display
 
-User enters the 9 behavioral feature values.
+Feature Importance Display
 
-The React frontend sends the data to the FastAPI backend.
+## 📋 Behavioral Features
 
-The Random Forest model processes the input.
+Feature	Description
 
-## The system predicts whether the employee is:
+http_count --	Total number of websites visited by the employee.
 
-Normal User or 
+unique_url --	Number of different websites accessed.
 
-Insider Threat
+logon_count --	Total login and logout activities.
 
-SHAP calculates the contribution of each feature.
+unique_pc --	Number of different computers used.
 
-The dashboard displays the prediction result.
+after_hours	-- Activities performed outside office hours.
 
-## Sample Output:
-## Prediction Result
+device_count --	Number of USB or external devices connected.
 
-Prediction: Normal User
+device_activity --	Total USB-related activities.
 
-Confidence Score: 52%
+file_count --	Total files accessed or modified.
+
+unique_files --	Number of different files accessed.
+
+email_count --	Total emails sent or received.
+
+total_attachment --	Total email attachments handled.
+
+unique_receivers --	Number of different email recipients.
+
+## 🔄 Prediction Workflow
+User Inputs Behavioral Features
+               │
+               ▼
+React Frontend
+               │
+               ▼
+FastAPI Backend
+               │
+               ▼
+Random Forest Model
+               │
+               ▼
+Prediction
+(Normal / Insider)
+               │
+               ▼
+Confidence Score
+               │
+               ▼
+SHAP Explainable AI
+               │
+               ▼
+Feature Importance Display
+
+## 🎯 Prediction Output
+
+The model predicts one of the following:
+
+✅ Normal User
+
+Employee behavior appears normal and does not indicate suspicious insider activity.
+
+🚨 Insider Threat
+
+Employee behavior shows patterns that may indicate a potential insider threat.
+
+Each prediction includes:
+
+Prediction Label
+
+Confidence Score
 
 SHAP Feature Importance
 
-The dashboard also displays the most influential features used by the model.
+## 📈 Sample Output
+Example Prediction
 
-## Example:
+Prediction : Insider Threat
 
-Logon Count – 0.2410
+Confidence : 94.67%
 
-Device Activity – 0.0977
+Top Important Features
 
-Unique Files – 0.0839
+Feature	SHAP Value
 
-File Count – 0.0784
+Device Count	0.1164 ,
+Logon Count	0.1062 ,
+Device Activity	0.0928 ,
+Unique Files	0.0632 ,
+Unique PC	0.0500
 
-Unique Receivers – 0.0783
+These values explain why the model classified the employee as an Insider Threat.
 
-These values help explain why the model classified the employee as a Normal User or Insider Threat.
+The project integrates SHAP (SHapley Additive Explanations) to improve model transparency.
 
-Ongoing Development
+SHAP helps by:
 
-## The following features are currently under development:
+1.Explaining every prediction.
+2.Showing the contribution of each feature.
+3.Identifying the most influential behavioral activities.
+4.Increasing trust in the machine learning model.
 
-User Authentication (Login)
-
-Input Validation
-
-Prediction History
-
-PostgreSQL Database Integration
-
-Error Handling
-
-Dashboard UI Enhancements
-
-## Future Enhancements:
-
-Risk Score Dashboard
-
-User Role-Based Access Control
-
-Prediction History Reports
-
-Advanced Data Visualization
-
-Model Performance Optimization
-
-Cloud Deployment
-
-Final Documentation and Testing
+## 📌 Project Architecture
+React Frontend
+      │
+      ▼
+FastAPI Backend
+      │
+      ▼
+Random Forest Model
+      │
+      ▼
+Prediction Engine
+      │
+      ▼
+SHAP Explainable AI
+      │
+      ▼
+Prediction Dashboard
