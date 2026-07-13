@@ -36,68 +36,27 @@ Insider User Labels
 
 These logs are processed to generate behavioral features for machine learning.
 
-## ⚙️ Machine Learning Workflow
-Raw CERT Dataset
-        │
-        ▼
-Data Preprocessing
-        │
-        ▼
-Feature Engineering
-        │
-        ▼
-Training Dataset
-        │
-        ▼
-Random Forest Model
-        │
-        ▼
-Prediction
-        │
-        ▼
-SHAP Explainable AI
-        │
-        ▼
-React Dashboard
+# 📊 Weekly Progress
 
-## 📊 Current Progress
 ## ✅ Week 1 – Machine Learning Development
 
-Completed:
+- Collected and analyzed the CERT Insider Threat Dataset to understand employee behavioral activities.
+- Preprocessed the raw datasets by cleaning missing values, formatting timestamps, and preparing structured data.
+- Performed feature engineering to extract behavioral features from logon, web, device, file, and email activities.
+- Trained a Random Forest Classification model to classify employee behavior as Normal User or Insider Threat.
+- Evaluated the model performance and serialized the trained model using Joblib.
+- Integrated SHAP (SHapley Additive Explanations) to generate feature importance and explain prediction results.
 
-Data Collection. 
+---
 
-Data Preprocessing
+## ✅ Week 2 – Backend and Frontend Development
 
-Feature Engineering
-
-Model Training
-
-Model Evaluation
-
-Random Forest Classification
-
-Model Serialization
-
-SHAP Analysis
-
-## ✅ Week 2 – Application Development
-
-Completed:
-
-FastAPI Backend
-
-React Frontend
-
-API Integration
-
-Real-time Prediction
-
-SHAP Integration
-
-Confidence Score Display
-
-Feature Importance Display
+- Developed the backend using FastAPI and integrated the trained Random Forest model for real-time prediction.
+- Created prediction APIs to return prediction results, confidence scores, and SHAP feature importance.
+- Designed a professional employee login page using React.js with a clean and responsive user interface.
+- Developed the prediction page to collect employee behavioral features and display prediction results.
+- Integrated the React frontend with the FastAPI backend for seamless communication.
+- Tested the complete workflow to ensure accurate predictions and proper frontend-backend integration.
 
 ## 📋 Behavioral Features
 
