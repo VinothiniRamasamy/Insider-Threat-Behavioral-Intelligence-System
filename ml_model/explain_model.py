@@ -3,59 +3,71 @@ import joblib
 import shap
 import matplotlib.pyplot as plt
 
-
 print("Loading Model and Dataset...")
 
+# -----------------------------------
+# Load Model
+# -----------------------------------
 
-# Load trained model
 model = joblib.load("../dataset/insider_threat_model.pkl")
 
+# -----------------------------------
+# Load Dataset
+# -----------------------------------
 
-# Load processed feature dataset
 data = pd.read_csv("../dataset/final_features.csv")
 
+# -----------------------------------
+# Features Only
+# -----------------------------------
 
-# Separate features
 X = data.drop(["user", "label"], axis=1)
-
 
 print("Creating SHAP Explainer...")
 
+# -----------------------------------
+# SHAP Explainer
+# -----------------------------------
 
-# Create SHAP Tree Explainer
 explainer = shap.TreeExplainer(model)
 
-
-# Calculate SHAP values
 shap_values = explainer.shap_values(X)
-
 
 print("SHAP Analysis Completed!")
 
-
 print("Generating Feature Importance Plot...")
 
-
-# Check SHAP output type
+# -----------------------------------
+# Handle Different SHAP Versions
+# -----------------------------------
 
 if isinstance(shap_values, list):
 
-    # Binary classification old SHAP format
+    # Older SHAP versions
     shap_values_to_plot = shap_values[1]
+
+elif hasattr(shap_values, "values"):
+
+    # New SHAP Explanation Object
+    shap_values_to_plot = shap_values.values
+
+    if len(shap_values_to_plot.shape) == 3:
+        shap_values_to_plot = shap_values_to_plot[:, :, 1]
 
 elif len(shap_values.shape) == 3:
 
-    # New SHAP format
+    # New ndarray format
     shap_values_to_plot = shap_values[:, :, 1]
 
 else:
 
-    # Regression / single output
     shap_values_to_plot = shap_values
 
+# -----------------------------------
+# Feature Importance Plot
+# -----------------------------------
 
-
-# Generate Feature Importance Plot
+plt.figure(figsize=(10,6))
 
 shap.summary_plot(
     shap_values_to_plot,
@@ -64,12 +76,9 @@ shap.summary_plot(
     show=False
 )
 
-
-plt.title("Feature Importance - SHAP Analysis")
-
+plt.title("Feature Importance using SHAP")
 
 plt.tight_layout()
-
 
 plt.savefig(
     "../dataset/shap_feature_importance.png",
@@ -77,10 +86,7 @@ plt.savefig(
     bbox_inches="tight"
 )
 
-
 plt.show()
 
-
-
-print("Explainable AI Completed Successfully!")
-print("SHAP plot saved as shap_feature_importance.png")
+print("\nExplainable AI Completed Successfully!")
+print("SHAP plot saved as ../dataset/shap_feature_importance.png")

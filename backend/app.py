@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import joblib
+
 import pandas as pd
+import joblib
 import shap
 import os
-
 
 # -----------------------------------
 # FastAPI App
@@ -14,7 +14,6 @@ import os
 app = FastAPI(
     title="AI-Powered Insider Threat Detection API"
 )
-
 
 # -----------------------------------
 # Enable CORS
@@ -28,20 +27,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 # -----------------------------------
-# Load ML Model
+# Load Model
 # -----------------------------------
 
-model_path = os.path.join("..", "ml_model", "model.pkl")
+model_path = os.path.join(
+    "..",
+    "dataset",
+    "insider_threat_model.pkl"
+)
 
 model = joblib.load(model_path)
 
-
+# -----------------------------------
 # SHAP Explainer
+# -----------------------------------
 
 explainer = shap.TreeExplainer(model)
-
 
 # -----------------------------------
 # Input Schema
@@ -50,10 +52,10 @@ explainer = shap.TreeExplainer(model)
 class UserInput(BaseModel):
 
     http_count: int
-    after_hours: int
-    unique_pc: int
     unique_url: int
     logon_count: int
+    unique_pc: int
+    after_hours: int
     device_count: int
     device_activity: int
     file_count: int
@@ -63,9 +65,8 @@ class UserInput(BaseModel):
     unique_receivers: int
 
 
-
 # -----------------------------------
-# Home Route
+# Home API
 # -----------------------------------
 
 @app.get("/")
@@ -76,22 +77,20 @@ def home():
     }
 
 
-
 # -----------------------------------
-# Prediction Route
+# Prediction API
 # -----------------------------------
 
 @app.post("/predict")
 def predict(data: UserInput):
 
-
     features = pd.DataFrame([{
 
         "http_count": data.http_count,
-        "after_hours": data.after_hours,
-        "unique_pc": data.unique_pc,
         "unique_url": data.unique_url,
         "logon_count": data.logon_count,
+        "unique_pc": data.unique_pc,
+        "after_hours": data.after_hours,
         "device_count": data.device_count,
         "device_activity": data.device_activity,
         "file_count": data.file_count,
@@ -102,40 +101,42 @@ def predict(data: UserInput):
 
     }])
 
-
+    # -----------------------------------
     # Prediction
+    # -----------------------------------
 
     prediction = model.predict(features)[0]
 
     probability = model.predict_proba(features)[0]
-
 
     confidence = round(
         max(probability) * 100,
         2
     )
 
-
     if prediction == 1:
-
         result = "Insider"
-
     else:
-
         result = "Normal"
 
-
-
-    # -------------------------------
+    # -----------------------------------
     # SHAP Explanation
-    # -------------------------------
+    # -----------------------------------
 
     shap_values = explainer.shap_values(features)
-
 
     if isinstance(shap_values, list):
 
         values = shap_values[1][0]
+
+    elif hasattr(shap_values, "values"):
+
+        values = shap_values.values
+
+        if len(values.shape) == 3:
+            values = values[0, :, 1]
+        else:
+            values = values[0]
 
     elif len(shap_values.shape) == 3:
 
@@ -145,25 +146,16 @@ def predict(data: UserInput):
 
         values = shap_values[0]
 
-
     values = values.flatten()
-
 
     explanation = {}
 
-
-    for feature, value in zip(
-        features.columns,
-        values
-    ):
+    for feature, value in zip(features.columns, values):
 
         explanation[feature] = round(
             float(abs(value)),
             4
         )
-
-
-    # Sort explanation
 
     explanation = dict(
         sorted(
@@ -173,13 +165,10 @@ def predict(data: UserInput):
         )
     )
 
-
     return {
 
         "prediction": result,
-
         "confidence": confidence,
-
         "explanation": explanation
 
     }

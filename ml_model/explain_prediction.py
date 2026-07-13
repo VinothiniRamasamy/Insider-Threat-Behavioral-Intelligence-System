@@ -2,45 +2,46 @@ import pandas as pd
 import joblib
 import shap
 
-
 print("Loading Model...")
 
+# ---------------------------------------
+# Load Trained Model
+# ---------------------------------------
 
-# Load trained model
-model = joblib.load("model.pkl")
+model = joblib.load("../dataset/insider_threat_model.pkl")
 
-
-# Create SHAP Explainer
+# SHAP Explainer
 explainer = shap.TreeExplainer(model)
 
+print("\nEnter User Activity Details\n")
 
-print("Enter User Activity Details")
+# ---------------------------------------
+# User Input
+# ---------------------------------------
 
+http_count = int(input("HTTP Count: "))
+unique_url = int(input("Unique URL Count: "))
+logon_count = int(input("Logon Count: "))
+unique_pc = int(input("Unique PC Count: "))
+after_hours = int(input("After Hours Activity: "))
+device_count = int(input("Device Count: "))
+device_activity = int(input("Device Activity: "))
+file_count = int(input("File Count: "))
+unique_files = int(input("Unique Files: "))
+email_count = int(input("Email Count: "))
+total_attachment = int(input("Total Attachments: "))
+unique_receivers = int(input("Unique Receivers: "))
 
-http_count = int(input("Enter HTTP Count: "))
-after_hours = int(input("After Hours Activity (1/0): "))
-unique_pc = int(input("Enter Unique PC Count: "))
-unique_url = int(input("Enter Unique URL Count: "))
-logon_count = int(input("Enter Logon Count: "))
-device_count = int(input("Enter Device Count: "))
-device_activity = int(input("Enter Device Activity Count: "))
-file_count = int(input("Enter File Count: "))
-unique_files = int(input("Enter Unique Files Count: "))
-email_count = int(input("Enter Email Count: "))
-total_attachment = int(input("Enter Total Attachment Count: "))
-unique_receivers = int(input("Enter Unique Receivers Count: "))
-
-
-# Create input dataframe
-# Same features used in train_model.py
+# ---------------------------------------
+# Create DataFrame
+# ---------------------------------------
 
 data = pd.DataFrame([{
-
     "http_count": http_count,
-    "after_hours": after_hours,
-    "unique_pc": unique_pc,
     "unique_url": unique_url,
     "logon_count": logon_count,
+    "unique_pc": unique_pc,
+    "after_hours": after_hours,
     "device_count": device_count,
     "device_activity": device_activity,
     "file_count": file_count,
@@ -48,70 +49,63 @@ data = pd.DataFrame([{
     "email_count": email_count,
     "total_attachment": total_attachment,
     "unique_receivers": unique_receivers
-
 }])
 
-
+# ---------------------------------------
 # Prediction
+# ---------------------------------------
 
-prediction = model.predict(data)
+prediction = model.predict(data)[0]
+probability = model.predict_proba(data)[0]
 
+confidence = probability[prediction] * 100
 
-if prediction[0] == 1:
+print("\n==========================")
 
-    print("\nRisk Level : HIGH")
-    print("Prediction : Insider Threat")
-
+if prediction == 1:
+    print("Prediction : 🚨 Insider Threat")
+    print("Risk Level : HIGH")
 else:
+    print("Prediction : ✅ Normal User")
+    print("Risk Level : LOW")
 
-    print("\nRisk Level : LOW")
-    print("Prediction : Normal User")
+print(f"Confidence : {confidence:.2f}%")
 
+print("==========================")
 
-
-# =========================
+# ---------------------------------------
 # SHAP Explanation
-# =========================
+# ---------------------------------------
 
-print("\nImportant Factors:")
-
+print("\nTop Important Factors\n")
 
 shap_values = explainer.shap_values(data)
 
-
-# Handle different SHAP versions
-
 if isinstance(shap_values, list):
-
     values = shap_values[1][0]
 
+elif hasattr(shap_values, "values"):
+    values = shap_values.values
+
+    if len(values.shape) == 3:
+        values = values[0, :, 1]
+    else:
+        values = values[0]
 
 elif len(shap_values.shape) == 3:
-
     values = shap_values[0, :, 1]
 
-
 else:
-
     values = shap_values[0]
 
-
-values = values.flatten()
-
-
-# Create importance dataframe
-
 importance = pd.DataFrame({
-
     "Feature": data.columns,
     "Impact": abs(values)
-
 })
 
-
-print(
-    importance.sort_values(
-        by="Impact",
-        ascending=False
-    )
+importance = importance.sort_values(
+    by="Impact",
+    ascending=False
 )
+
+print(importance)

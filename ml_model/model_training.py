@@ -2,34 +2,41 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.metrics import (
+    accuracy_score,
+    classification_report,
+    confusion_matrix
+)
 
 import joblib
 
-
 print("Loading Feature Dataset...")
 
+# ---------------------------------
+# Load Dataset
+# ---------------------------------
 
-# Load feature dataset
 data = pd.read_csv("../dataset/final_features.csv")
 
-
-print("Dataset Loaded!")
+print("Dataset Loaded Successfully!")
 print(data.head())
 
-
-# Remove user column (not useful for ML)
+# ---------------------------------
+# Features & Label
+# ---------------------------------
 
 X = data.drop(["user", "label"], axis=1)
-
 y = data["label"]
 
-
 print("\nFeature Columns:")
-print(X.columns)
+print(X.columns.tolist())
 
+print("\nLabel Distribution:")
+print(y.value_counts())
 
+# ---------------------------------
 # Train Test Split
+# ---------------------------------
 
 X_train, X_test, y_train, y_test = train_test_split(
     X,
@@ -39,58 +46,70 @@ X_train, X_test, y_train, y_test = train_test_split(
     stratify=y
 )
 
+print("\nTraining Shape :", X_train.shape)
+print("Testing Shape  :", X_test.shape)
 
-print("\nTraining Data:", X_train.shape)
-print("Testing Data:", X_test.shape)
-
-
-
-# Create Model
+# ---------------------------------
+# Random Forest Model
+# ---------------------------------
 
 model = RandomForestClassifier(
-    n_estimators=100,
-    random_state=42
+    n_estimators=300,
+    random_state=42,
+    class_weight="balanced"
 )
-
 
 print("\nTraining Model...")
 
 model.fit(X_train, y_train)
 
+print("Training Completed!")
 
-print("Model Training Completed!")
-
-
-
+# ---------------------------------
 # Prediction
+# ---------------------------------
 
 y_pred = model.predict(X_test)
 
-
-
-# Evaluation
-
 accuracy = accuracy_score(y_test, y_pred)
 
-print("\nAccuracy:")
-print(accuracy)
+print("\n==============================")
+print("MODEL PERFORMANCE")
+print("==============================")
 
+print(f"\nAccuracy : {accuracy*100:.2f}%")
 
-print("\nClassification Report:")
+print("\nClassification Report")
 print(classification_report(y_test, y_pred))
 
-
-print("\nConfusion Matrix:")
+print("\nConfusion Matrix")
 print(confusion_matrix(y_test, y_pred))
 
+# ---------------------------------
+# Feature Importance
+# ---------------------------------
 
+importance = pd.DataFrame({
+    "Feature": X.columns,
+    "Importance": model.feature_importances_
+})
 
+importance = importance.sort_values(
+    by="Importance",
+    ascending=False
+)
+
+print("\nTop Important Features")
+print(importance)
+
+# ---------------------------------
 # Save Model
+# ---------------------------------
 
 joblib.dump(
     model,
     "../dataset/insider_threat_model.pkl"
 )
 
-
 print("\nModel Saved Successfully!")
+print("Saved Path : ../dataset/insider_threat_model.pkl")
