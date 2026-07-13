@@ -131,34 +131,6 @@ Confidence Score
 
 SHAP Feature Importance
 
-## 📈 Sample Output
-Example Prediction
-
-Prediction : Insider Threat
-
-Confidence : 94.67%
-
-Top Important Features
-
-Feature	SHAP Value
-
-Device Count	0.1164 ,
-Logon Count	0.1062 ,
-Device Activity	0.0928 ,
-Unique Files	0.0632 ,
-Unique PC	0.0500
-
-These values explain why the model classified the employee as an Insider Threat.
-
-The project integrates SHAP (SHapley Additive Explanations) to improve model transparency.
-
-SHAP helps by:
-
-1.Explaining every prediction.
-2.Showing the contribution of each feature.
-3.Identifying the most influential behavioral activities.
-4.Increasing trust in the machine learning model.
-
 ## 📌 Project Architecture
 React Frontend
       │
@@ -176,3 +148,15 @@ SHAP Explainable AI
       │
       ▼
 Prediction Dashboard
+
+## 🔐 Employee Login Page
+
+![Login Page](screenshots/login.png)
+
+## 📖 Employee Behavior Guide
+
+![Behavior Guide](screenshots/behavior-guide.png)
+
+## 📊 Prediction Dashboard
+
+![Prediction Dashboard](screenshots/prediction-dashboard.png)
