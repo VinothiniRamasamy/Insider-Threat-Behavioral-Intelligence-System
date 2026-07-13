@@ -151,12 +151,12 @@ Prediction Dashboard
 
 ## 🔐 Employee Login Page
 
-![Login Page](screenshots/login.png)
+![Login Page](screenshots/login.png.jpeg)
 
 ## 📖 Employee Behavior Guide
 
-![Behavior Guide](screenshots/behavior-guide.png)
+![Behavior Guide](screenshots/behavior-guide.png.jpeg)
 
 ## 📊 Prediction Dashboard
 
-![Prediction Dashboard](screenshots/prediction-dashboard.png)
+![Prediction Dashboard](screenshots/prediction-dashboard.png.jpeg)
