@@ -258,25 +258,6 @@ npm start
 
 ---
 
-# 📷 Screenshots
-
-## 🔐 Employee Login
-
-![Employee Login](screenshots/login.png)
-
----
-
-## 📖 Employee Behavior Guide
-
-![Behavior Guide](screenshots/behavior-guide.png)
-
----
-
-## 📊 Prediction Dashboard
-
-![Prediction Dashboard](screenshots/prediction-dashboard.png)
-
----
 
 # 🎯 Future Enhancements
 
