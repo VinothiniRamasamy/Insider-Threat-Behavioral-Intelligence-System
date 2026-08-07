@@ -1,162 +1,438 @@
-# Insider-Threat-Behavioral-Intelligence-System
+# 🛡️ Insider Threat Behavioral Intelligence System
 
-## 📌 Project Overview
-
-The Insider Threat Behavioral Intelligence System is an AI-powered web application designed to detect potential insider threats by analyzing employee behavioral activities. The system leverages Machine Learning (Random Forest Classifier) to classify employee behavior as either Normal User or Insider Threat. Additionally, it uses SHAP (SHapley Additive Explanations) to explain the reasoning behind every prediction, making the model transparent and interpretable.
-
-## 🎯 Project Objectives
-
-Analyze employee behavioral activities.
-
-Detect potential insider threats using Machine Learning.
-
-Provide real-time predictions through a web application.
-
-Explain prediction results using SHAP Explainable AI.
-
-Help organizations identify suspicious employee behavior at an early stage.
-
-## 📂 Dataset
-
-This project uses the CERT Insider Threat Dataset, which contains simulated employee activity logs.
-
-The dataset includes:
-
-HTTP Activity
-
-Logon Activity
-
-Device Usage
-
-File Access
-
-Email Communication
-
-Insider User Labels
-
-These logs are processed to generate behavioral features for machine learning.
-
-# 📊 Weekly Progress
-
-## ✅ Week 1 – Machine Learning Development
-
-- Collected and analyzed the CERT Insider Threat Dataset to understand employee behavioral activities.
-- Preprocessed the raw datasets by cleaning missing values, formatting timestamps, and preparing structured data.
-- Performed feature engineering to extract behavioral features from logon, web, device, file, and email activities.
-- Trained a Random Forest Classification model to classify employee behavior as Normal User or Insider Threat.
-- Evaluated the model performance and serialized the trained model using Joblib.
-- Integrated SHAP (SHapley Additive Explanations) to generate feature importance and explain prediction results.
+An AI-powered Insider Threat Behavioral Intelligence System that detects suspicious employee activities by analyzing behavioral deviations from historical patterns. The system uses Machine Learning to identify insider threats, assign dynamic risk scores, and provide real-time monitoring through a FastAPI backend and React dashboard.
 
 ---
 
-## ✅ Week 2 – Backend and Frontend Development
+# 📖 Overview
 
-- Developed the backend using FastAPI and integrated the trained Random Forest model for real-time prediction.
-- Created prediction APIs to return prediction results, confidence scores, and SHAP feature importance.
-- Designed a professional employee login page using React.js with a clean and responsive user interface.
-- Developed the prediction page to collect employee behavioral features and display prediction results.
-- Integrated the React frontend with the FastAPI backend for seamless communication.
-- Tested the complete workflow to ensure accurate predictions and proper frontend-backend integration.
+Insider threats remain one of the most difficult cybersecurity challenges because malicious or negligent employees already possess authorized access to organizational resources.
 
-## 📋 Behavioral Features
+This project analyzes employee behavioral logs collected from enterprise systems and compares current activities with historical behavioral baselines. Machine Learning models are then used to identify abnormal behavior, estimate risk levels, and assist security analysts in investigating potential insider threats.
 
-Feature	Description
+The application supports real-time prediction streaming, explainable risk analysis, and interactive visualization through a web dashboard.
 
-http_count --	Total number of websites visited by the employee.
+---
 
-unique_url --	Number of different websites accessed.
+# 🎯 Objectives
 
-logon_count --	Total login and logout activities.
+- Detect suspicious employee behavior using Machine Learning.
+- Build behavioral baselines for every employee.
+- Identify deviations from normal user activities.
+- Calculate dynamic insider risk scores.
+- Stream predictions in real time.
+- Provide an easy-to-use dashboard for security analysts.
 
-unique_pc --	Number of different computers used.
+---
 
-after_hours	-- Activities performed outside office hours.
+# 🚀 Key Features
 
-device_count --	Number of USB or external devices connected.
+- Employee Behavioral Profiling
+- Feature Engineering from CERT logs
+- Behavior Baseline Generation
+- Behavior Deviation Analysis
+- Gradient Boosting Machine Learning Model
+- Explainable Predictions
+- Dynamic Risk Scoring
+- FastAPI REST API
+- Real-Time Prediction Streaming
+- React Dashboard
+- Docker Support
 
-device_activity --	Total USB-related activities.
+---
 
-file_count --	Total files accessed or modified.
+# 🤖 Machine Learning Pipeline
 
-unique_files --	Number of different files accessed.
+```text
+CERT Insider Threat Dataset
+            │
+            ▼
+      Data Preprocessing
+            │
+            ▼
+     Feature Engineering
+            │
+            ▼
+  Behavioral Baseline Creation
+            │
+            ▼
+ Behavior Deviation Calculation
+            │
+            ▼
+      Feature Standardization
+            │
+            ▼
+ Gradient Boosting Classifier
+            │
+            ▼
+     Insider Threat Prediction
+            │
+            ▼
+      Risk Score Calculation
+            │
+            ▼
+    Prediction Explanation
+            │
+            ▼
+      FastAPI REST Backend
+            │
+            ▼
+   React Real-Time Dashboard
+```
 
-email_count --	Total emails sent or received.
+---
 
-total_attachment --	Total email attachments handled.
+# 📊 Machine Learning Workflow
 
-unique_receivers --	Number of different email recipients.
+## 1. Data Preprocessing
 
-## 🔄 Prediction Workflow
-User Inputs Behavioral Features
-               │
-               ▼
-React Frontend
-               │
-               ▼
-FastAPI Backend
-               │
-               ▼
-Random Forest Model
-               │
-               ▼
-Prediction
-(Normal / Insider)
-               │
-               ▼
-Confidence Score
-               │
-               ▼
-SHAP Explainable AI
-               │
-               ▼
-Feature Importance Display
+The CERT Insider Threat dataset contains multiple log sources including:
 
-## 🎯 Prediction Output
+- Logon Logs
+- Device Logs
+- Email Logs
+- HTTP Logs
+- File Access Logs
 
-The model predicts one of the following:
+During preprocessing:
 
-✅ Normal User
+- Missing values were handled
+- Duplicate records were removed
+- Timestamp fields were standardized
+- Clean datasets were generated
 
-Employee behavior appears normal and does not indicate suspicious insider activity.
+Output Files:
 
-🚨 Insider Threat
+- logon_clean.csv
+- device_clean.csv
+- email_clean.csv
+- file_clean.csv
+- http_clean.csv
 
-Employee behavior shows patterns that may indicate a potential insider threat.
+---
 
-Each prediction includes:
+## 2. Feature Engineering
 
-Prediction Label
+Behavioral features were extracted for every employee.
 
-Confidence Score
+Important features include:
 
-SHAP Feature Importance
+- Logon Count
+- Off Hours Logons
+- Distinct PCs Used
+- USB Connections
+- Off Hours USB Usage
+- Files Copied to USB
+- Sensitive Files Copied
+- Total Emails Sent
+- External Emails
+- Email Attachments
+- Email Size
+- HTTP Requests
+- Cloud Job Visits
 
-## 📌 Project Architecture
-React Frontend
-      │
-      ▼
-FastAPI Backend
-      │
-      ▼
-Random Forest Model
-      │
-      ▼
-Prediction Engine
-      │
-      ▼
-SHAP Explainable AI
-      │
-      ▼
-Prediction Dashboard
+Generated Dataset:
 
-## 🔐 Employee Login Page
+- daily_user_features.csv
 
-![Login Page](screenshots/login.png.jpeg)
+---
 
-## 📖 Employee Behavior Guide
+## 3. Behavioral Baseline Generation
 
-![Behavior Guide](screenshots/behavior-guide.png.jpeg)
+Historical user activities were aggregated to calculate the normal behavioral profile for every employee.
 
-## 📊 Prediction Dashboard
+Generated File:
 
-![Prediction Dashboard](screenshots/prediction-dashboard.png.jpeg)
+- behavior_baseline.csv
+
+---
+
+## 4. Behavior Deviation Calculation
+
+Current user activity is compared against the behavioral baseline to compute deviations.
+
+Generated File:
+
+- behavior_deviation.csv
+
+---
+
+## 5. Feature Scaling
+
+Numerical features are standardized using StandardScaler before prediction.
+
+Saved Model:
+
+- scaler.pkl
+
+---
+
+## 6. Machine Learning Model
+
+The project uses a **Gradient Boosting Classifier** to classify employee behavior.
+
+Model artifacts:
+
+- gb.pkl
+- feature_columns.pkl
+- feature_means.pkl
+
+---
+
+## 7. Risk Score Calculation
+
+Predicted behaviors are converted into risk scores using weighted behavioral features.
+
+Risk Levels:
+
+| Score | Risk |
+|-------|------|
+| 0 – 9 | Low Risk |
+| 10 – 19 | Medium Risk |
+| 20+ | High Risk |
+
+Generated Outputs:
+
+- risk_scores.csv
+- high_risk_users.csv
+
+---
+
+## 8. Explainable Predictions
+
+Prediction explanations identify the important behavioral features influencing each prediction.
+
+Generated File:
+
+- explained_predictions.csv
+
+---
+
+## 9. Real-Time Threat Monitoring
+
+The FastAPI backend streams live predictions to the React dashboard.
+
+Displayed Information:
+
+- Employee ID
+- Prediction
+- Risk Score
+- Risk Category
+- Timestamp
+
+---
+
+# 🛠️ Technology Stack
+
+## Programming
+
+- Python
+- JavaScript
+
+## Machine Learning
+
+- Scikit-Learn
+- Gradient Boosting Classifier
+
+## Data Processing
+
+- Pandas
+- NumPy
+
+## Backend
+
+- FastAPI
+- Uvicorn
+
+## Frontend
+
+- React.js
+
+## Deployment
+
+- Docker
+- Docker Compose
+
+---
+
+# 📂 Project Structure
+
+```
+Insider_Threat_Behavioral_Intelligence_System
+
+│
+├── backend
+│   ├── app.py
+│   ├── dashboard.py
+│   ├── live_feature_engine.py
+│   ├── sample_data.py
+│   ├── stream_processor.py
+│   ├── user_activity.py
+│   ├── requirements.txt
+│   └── Dockerfile
+│
+├── dataset
+│   ├── logon_clean.csv
+│   ├── device_clean.csv
+│   ├── email_clean.csv
+│   ├── file_clean.csv
+│   ├── http_clean.csv
+│   ├── daily_user_features.csv
+│   ├── behavior_baseline.csv
+│   ├── behavior_deviation.csv
+│   ├── anomaly_results.csv
+│   ├── risk_scores.csv
+│   ├── explained_predictions.csv
+│   ├── high_risk_users.csv
+│   └── isolation_forest_model.pkl
+│
+├── ml_model
+│   ├── preprocess.py
+│   ├── feature_engineering.py
+│   ├── behavior_baseline.py
+│   ├── behavior_deviation.py
+│   ├── anomaly_detection.py
+│   ├── risk_scoring.py
+│   ├── explain_prediction.py
+│   ├── threat_investigation.py
+│   ├── train_and_save.py
+│   ├── gb.pkl
+│   ├── scaler.pkl
+│   ├── feature_columns.pkl
+│   └── feature_means.pkl
+│
+├── frontend
+│   ├── src
+│   ├── public
+│   ├── package.json
+│   └── README.md
+│
+└── docker-compose.yml
+```
+
+---
+
+# ⚙️ Installation
+
+### Clone Repository
+
+```bash
+git clone https://github.com/yourusername/Insider-Threat-Behavioral-Intelligence-System.git
+
+cd Insider-Threat-Behavioral-Intelligence-System
+```
+
+### Backend
+
+```bash
+cd backend
+
+pip install -r requirements.txt
+
+uvicorn app:app --reload
+```
+
+Backend:
+
+```
+http://127.0.0.1:8000
+```
+
+---
+
+### Frontend
+
+```bash
+cd frontend
+
+npm install
+
+npm start
+```
+
+Frontend:
+
+```
+http://localhost:3000
+```
+
+---
+
+# 📡 API Endpoints
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| GET | / | API Status |
+| POST | /token | User Authentication |
+| GET | /stream | Real-Time Prediction Stream |
+
+---
+
+# 📊 Dashboard Features
+
+The React dashboard displays:
+
+- Total Processed Logs
+- Detected Anomalies
+- Critical Users
+- Risk Scores
+- Live Prediction Table
+- Real-Time Monitoring
+
+---
+
+# 🐳 Docker Deployment
+
+```bash
+docker-compose up --build
+```
+
+---
+
+# 🔮 Future Enhancements
+
+- JWT Authentication
+- Role-Based Access Control
+- Email Alert Notifications
+- SIEM Integration
+- SHAP-Based Explainable AI
+- Cloud Deployment (AWS/Azure)
+- Kafka-Based Real-Time Streaming
+- Advanced Threat Investigation Module
+
+---
+
+# 📚 Dataset
+
+**CERT Insider Threat Dataset (CMU CERT)**
+
+The dataset contains enterprise activity logs including:
+
+- Logon Activities
+- Device Activities
+- File Operations
+- Email Communications
+- HTTP Browsing Records
+
+---
+
+# 👩‍💻 Developer
+
+**Vinothini R**
+
+B.Tech – Artificial Intelligence and Data Science
+
+
+---
+
+# 📌 Project Highlights
+
+- AI-Based Insider Threat Detection
+- Behavioral Analytics
+- Machine Learning Pipeline
+- Explainable Predictions
+- Dynamic Risk Scoring
+- FastAPI Backend
+- React Frontend
+- Real-Time Monitoring Dashboard
+- Dockerized Deployment
