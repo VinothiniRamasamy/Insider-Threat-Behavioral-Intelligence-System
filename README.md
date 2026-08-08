@@ -4,435 +4,732 @@ An AI-powered Insider Threat Behavioral Intelligence System that detects suspici
 
 ---
 
-# 📖 Overview
+## 🚀 Project Overview
 
-Insider threats remain one of the most difficult cybersecurity challenges because malicious or negligent employees already possess authorized access to organizational resources.
+The platform provides an end-to-end workflow for insider threat detection:
 
-This project analyzes employee behavioral logs collected from enterprise systems and compares current activities with historical behavioral baselines. Machine Learning models are then used to identify abnormal behavior, estimate risk levels, and assist security analysts in investigating potential insider threats.
+**Activity Logs → Feature Engineering → Behavioral Baselines → ML Detection → UEBA Risk Scoring → Alerts → Investigation → Reports**
 
-The application supports real-time prediction streaming, explainable risk analysis, and interactive visualization through a web dashboard.
+The system combines:
 
----
-
-# 🎯 Objectives
-
-- Detect suspicious employee behavior using Machine Learning.
-- Build behavioral baselines for every employee.
-- Identify deviations from normal user activities.
-- Calculate dynamic insider risk scores.
-- Stream predictions in real time.
-- Provide an easy-to-use dashboard for security analysts.
-
----
-
-# 🚀 Key Features
-
-- Employee Behavioral Profiling
-- Feature Engineering from CERT logs
-- Behavior Baseline Generation
-- Behavior Deviation Analysis
-- Gradient Boosting Machine Learning Model
-- Explainable Predictions
-- Dynamic Risk Scoring
-- FastAPI REST API
-- Real-Time Prediction Streaming
-- React Dashboard
-- Docker Support
+* 🤖 Machine Learning-based threat classification
+* 📊 User behavioral profiling
+* ⚖️ Dynamic risk scoring
+* 🔍 SHAP-based explainable AI
+* 🚨 Real-time threat alerts
+* 📡 Server-Sent Events (SSE) activity streaming
+* 📄 PDF case report generation
+* 📊 Excel log export
+* 🖥️ Interactive React security console
 
 ---
 
-# 🤖 Machine Learning Pipeline
+## ✨ Key Features
+
+### 🔐 1. User Authentication & RBAC
+
+* Analyst login authentication
+* Role-based portal access
+* Secure analyst session management
+
+### 👤 2. Employee Profiles
+
+* Employee identity tracking
+* User-specific behavioral information
+* Historical activity baseline management
+
+### 📡 3. Real-Time Activity Monitoring
+
+* Monitors user activity events
+* Server-Sent Events (SSE) based streaming
+* Near real-time activity visualization
+* Activity refresh approximately every 1.5 seconds
+
+### 📊 4. Behavioral Profiling
+
+* Creates per-user daily behavioral profiles
+* Calculates historical activity averages
+* Maintains behavioral baselines using:
 
 ```text
-CERT Insider Threat Dataset
-            │
-            ▼
-      Data Preprocessing
-            │
-            ▼
-     Feature Engineering
-            │
-            ▼
-  Behavioral Baseline Creation
-            │
-            ▼
- Behavior Deviation Calculation
-            │
-            ▼
-      Feature Standardization
-            │
-            ▼
- Gradient Boosting Classifier
-            │
-            ▼
-     Insider Threat Prediction
-            │
-            ▼
-      Risk Score Calculation
-            │
-            ▼
-    Prediction Explanation
-            │
-            ▼
-      FastAPI REST Backend
-            │
-            ▼
-   React Real-Time Dashboard
+daily_user_features.csv
+```
+
+### 🚨 5. Anomaly Detection
+
+* Compares current activity against historical behavioral patterns
+* Detects abnormal deviations
+* Identifies potentially suspicious user behavior
+
+### ⚖️ 6. Dynamic Risk Scoring
+
+Generates a composite risk score between:
+
+**0 – 100**
+
+The score is calculated using weighted behavioral risk indicators.
+
+### 🔍 7. Threat Investigation
+
+Security analysts can investigate suspicious employees using:
+
+* Behavioral deviations
+* Risk scores
+* SHAP feature contributions
+* Activity evidence
+* User-specific investigation reports
+
+### 🧠 8. UEBA Intelligence
+
+The UEBA engine establishes behavioral baselines and identifies deviations from normal user activity.
+
+### 🚨 9. Incident Alerts Queue
+
+Displays high-risk users and suspicious activities with severity classifications.
+
+### 📈 10. Executive Dashboard
+
+Provides high-level enterprise security statistics such as:
+
+* Threat counts
+* Risk distribution
+* User activity statistics
+* System monitoring information
+
+### 🔔 11. Notifications & Severity Flags
+
+Automatically categorizes detected risks into:
+
+* 🔴 Critical
+* 🟠 High
+* 🟡 Medium
+* 🔵 Low
+
+### 📄 12. Reports & Exports
+
+Supports generation of:
+
+* PDF investigation case files
+* Excel activity/risk logs
+
+### 🔗 13. End-to-End Integration
+
+Integrates:
+
+**React Frontend + FastAPI Backend + ML Model + UEBA Risk Engine**
+
+into a single security monitoring platform.
+
+---
+
+## 🏗️ System Architecture
+
+```mermaid
+flowchart TB
+
+    User([🧑‍💼 Security Analyst / Operator])
+
+    subgraph stack["🛡️ Insider Threat Platform"]
+        direction TB
+
+        subgraph fe["Frontend · React 18"]
+            React["React Console<br/>Sidebar Navigation & 6 Main Pages"]
+        end
+
+        subgraph be["Backend · FastAPI"]
+            direction TB
+
+            Auth["OAuth2 & JWT Auth<br/>Analyst Session Tracking"]
+
+            subgraph routers["API Endpoints"]
+                direction LR
+                R1["/stream · SSE Event Stream"]
+                R2["/api/v1/export/pdf"]
+                R3["/api/v1/export/excel"]
+            end
+
+            subgraph mlcore["ML Core & UEBA Engine"]
+                direction LR
+                F["Feature Aggregation<br/>daily_user_features.csv"]
+                D["Gradient Boosting<br/>gb.pkl + scaler.pkl"]
+                S["Weighted Risk Engine<br/>0–100 Composite Score"]
+                X["SHAP Feature<br/>Attributions"]
+            end
+        end
+    end
+
+    User -->|"HTTP :3000"| React
+    React -->|"REST API / SSE :8000"| Auth
+    Auth --> routers
+    routers --> mlcore
 ```
 
 ---
 
-# 📊 Machine Learning Workflow
+## 🔬 ML & Risk Detection Pipeline
 
-## 1. Data Preprocessing
+The system processes raw CERT activity logs and converts them into daily user behavioral features.
 
-The CERT Insider Threat dataset contains multiple log sources including:
+```mermaid
+flowchart LR
 
-- Logon Logs
-- Device Logs
-- Email Logs
-- HTTP Logs
-- File Access Logs
+    CERT["📥 CERT r4.2 Logs<br/>logon · device · file<br/>email · http"] --> ING["Ingestion"]
 
-During preprocessing:
+    ING --> FEAT["Daily Feature<br/>Engineering"]
 
-- Missing values were handled
-- Duplicate records were removed
-- Timestamp fields were standardized
-- Clean datasets were generated
+    FEAT --> BASE["Per-User Historical<br/>Baselines"]
 
-Output Files:
+    BASE --> DET{"ML Inference &<br/>Risk Scoring"}
 
-- logon_clean.csv
-- device_clean.csv
-- email_clean.csv
-- file_clean.csv
-- http_clean.csv
+    DET --> GB["✅ Gradient Boosting<br/>Classifier (gb.pkl)"]
 
----
+    DET --> UEBA["⚖️ Weighted UEBA<br/>Risk Engine"]
 
-## 2. Feature Engineering
+    GB --> SCORE["🎯 Composite Risk Score (0–100)"]
 
-Behavioral features were extracted for every employee.
+    UEBA --> SCORE
 
-Important features include:
+    SCORE --> ALERT["🚨 Incident Alerts Queue"]
 
-- Logon Count
-- Off Hours Logons
-- Distinct PCs Used
-- USB Connections
-- Off Hours USB Usage
-- Files Copied to USB
-- Sensitive Files Copied
-- Total Emails Sent
-- External Emails
-- Email Attachments
-- Email Size
-- HTTP Requests
-- Cloud Job Visits
+    ALERT --> INVEST["🔍 Investigation Console"]
 
-Generated Dataset:
-
-- daily_user_features.csv
-
----
-
-## 3. Behavioral Baseline Generation
-
-Historical user activities were aggregated to calculate the normal behavioral profile for every employee.
-
-Generated File:
-
-- behavior_baseline.csv
-
----
-
-## 4. Behavior Deviation Calculation
-
-Current user activity is compared against the behavioral baseline to compute deviations.
-
-Generated File:
-
-- behavior_deviation.csv
-
----
-
-## 5. Feature Scaling
-
-Numerical features are standardized using StandardScaler before prediction.
-
-Saved Model:
-
-- scaler.pkl
-
----
-
-## 6. Machine Learning Model
-
-The project uses a **Gradient Boosting Classifier** to classify employee behavior.
-
-Model artifacts:
-
-- gb.pkl
-- feature_columns.pkl
-- feature_means.pkl
-
----
-
-## 7. Risk Score Calculation
-
-Predicted behaviors are converted into risk scores using weighted behavioral features.
-
-Risk Levels:
-
-| Score | Risk |
-|-------|------|
-| 0 – 9 | Low Risk |
-| 10 – 19 | Medium Risk |
-| 20+ | High Risk |
-
-Generated Outputs:
-
-- risk_scores.csv
-- high_risk_users.csv
-
----
-
-## 8. Explainable Predictions
-
-Prediction explanations identify the important behavioral features influencing each prediction.
-
-Generated File:
-
-- explained_predictions.csv
-
----
-
-## 9. Real-Time Threat Monitoring
-
-The FastAPI backend streams live predictions to the React dashboard.
-
-Displayed Information:
-
-- Employee ID
-- Prediction
-- Risk Score
-- Risk Category
-- Timestamp
-
----
-
-# 🛠️ Technology Stack
-
-## Programming
-
-- Python
-- JavaScript
-
-## Machine Learning
-
-- Scikit-Learn
-- Gradient Boosting Classifier
-
-## Data Processing
-
-- Pandas
-- NumPy
-
-## Backend
-
-- FastAPI
-- Uvicorn
-
-## Frontend
-
-- React.js
-
-## Deployment
-
-- Docker
-- Docker Compose
-
----
-
-# 📂 Project Structure
-
+    INVEST --> REP["📄 Case Reports<br/>PDF · Excel"]
 ```
-Insider_Threat_Behavioral_Intelligence_System
 
-│
-├── backend
+---
+
+## ⚙️ How Detection Works
+
+### Step 1 — Data Ingestion
+
+The platform uses activity logs from the **CERT Insider Threat Benchmark Dataset r4.2**.
+
+The major activity sources include:
+
+* Logon activity
+* Device activity
+* File activity
+* Email activity
+* HTTP activity
+
+### Step 2 — Feature Engineering
+
+Raw event logs are aggregated into daily user-level behavioral features.
+
+The generated dataset is:
+
+```text
+dataset/daily_user_features.csv
+```
+
+### Step 3 — Behavioral Baselines
+
+Historical user activity is used to establish normal behavioral patterns.
+
+The system maintains baseline feature information using:
+
+```text
+ml_model/feature_means.pkl
+```
+
+### Step 4 — Machine Learning Detection
+
+The processed features are passed to a trained:
+
+**Gradient Boosting Classifier**
+
+The trained model is stored as:
+
+```text
+ml_model/gb.pkl
+```
+
+Feature scaling is handled using:
+
+```text
+ml_model/scaler.pkl
+```
+
+### Step 5 — UEBA Risk Calculation
+
+The system combines machine learning detection with weighted behavioral risk indicators.
+
+### Step 6 — Composite Risk Score
+
+A final score between **0 and 100** is generated.
+
+### Step 7 — Alert Generation
+
+High-risk activity is added to the incident alert queue for further investigation.
+
+### Step 8 — Investigation
+
+Security analysts can inspect:
+
+* User behavior
+* Risk score
+* Behavioral deviations
+* Important features
+* SHAP explanations
+* Activity timeline
+
+### Step 9 — Reporting
+
+Investigation results can be exported as:
+
+* PDF case files
+* Excel reports
+
+---
+
+## ⚖️ Risk Scoring & Severity Pipeline
+
+The UEBA engine calculates the composite risk score using weighted behavioral indicators.
+
+| Risk Component         | Weight |
+| ---------------------- | -----: |
+| Files Copied to USB    |     3× |
+| Off-Hours USB Activity |     3× |
+| External Email Volume  |     3× |
+| Off-Hours Logons       |     2× |
+| Cloud Job Visits       |     2× |
+
+```mermaid
+flowchart TB
+
+    subgraph comp["Weighted Risk Components"]
+        direction LR
+        A["Files Copied to USB<br/>Weight: 3x"]
+        B["Off-Hours USB Activity<br/>Weight: 3x"]
+        C["External Email Volume<br/>Weight: 3x"]
+        D["Off-Hours Logons<br/>Weight: 2x"]
+        E["Cloud Job Visits<br/>Weight: 2x"]
+    end
+
+    A --> SCORE
+    B --> SCORE
+    C --> SCORE
+    D --> SCORE
+    E --> SCORE
+
+    SCORE["🎯 Composite Score · 0–100"] --> TIER{"Severity Level"}
+
+    TIER -->|"≥ 80"| CRIT["🔴 CRITICAL RISK"]
+    TIER -->|"≥ 60"| HIGH["🟠 HIGH RISK"]
+    TIER -->|"≥ 40"| MED["🟡 MEDIUM RISK"]
+    TIER -->|"< 40"| LOW["🔵 LOW RISK"]
+
+    CRIT --> QUEUE["Alert Queue & Investigation Workflow"]
+    HIGH --> QUEUE
+```
+
+### Severity Levels
+
+| Score | Severity    |
+| ----: | ----------- |
+|  ≥ 80 | 🔴 Critical |
+|  ≥ 60 | 🟠 High     |
+|  ≥ 40 | 🟡 Medium   |
+|  < 40 | 🔵 Low      |
+
+---
+
+## 🔍 Explainable AI with SHAP
+
+The platform uses **SHAP (SHapley Additive exPlanations)** to provide explainability for ML predictions.
+
+SHAP helps the analyst understand:
+
+* Which behavioral features contributed to the prediction
+* Which activities increased risk
+* Which activities reduced risk
+* Why a particular user was flagged
+
+This improves the interpretability of the insider threat detection process.
+
+---
+
+## 🔄 Forensic Case Investigation Workflow
+
+When an analyst investigates a suspicious employee:
+
+```mermaid
+sequenceDiagram
+    autonumber
+
+    participant U as 🧑‍💼 Analyst
+    participant F as React Frontend
+    participant B as FastAPI Backend
+    participant ML as ML & SHAP Core
+
+    U->>F: Click "Investigate"
+    F->>B: Request user investigation data
+    B->>ML: Fetch baseline and calculate deviations
+    ML-->>B: SHAP scores and observed metrics
+    B->>B: Generate PDF using ReportLab
+    B-->>F: Return investigation report
+    F-->>U: Investigation Report
+```
+
+Example case report:
+
+```text
+Investigation_Report_AAE0190.pdf
+```
+
+---
+
+## 🖥️ Security Console
+
+The React frontend provides six primary pages:
+
+1. 📊 Dashboard
+2. 📡 Live Monitoring
+3. 🧠 Behavioral Profiling
+4. 🚨 Threat Alerts
+5. 🔍 Investigation
+6. 📄 Reports
+
+The console uses a responsive dark cybersecurity-themed interface.
+
+---
+
+## 🧩 Module Implementation Status
+
+|  # | Module                | Status | Key Functionality                            |
+| -: | --------------------- | :----: | -------------------------------------------- |
+|  1 | User Auth & RBAC      |    ✅   | Analyst authentication and role-based access |
+|  2 | Employee Profiles     |    ✅   | Identity tracking and baseline profiles      |
+|  3 | Activity Monitor      |    ✅   | Real-time SSE activity streaming             |
+|  4 | Behavioral Profiling  |    ✅   | Per-user daily behavioral baselines          |
+|  5 | Anomaly Detection     |    ✅   | Historical deviation detection               |
+|  6 | Risk Scoring          |    ✅   | Dynamic 0–100 risk score                     |
+|  7 | Threat Investigation  |    ✅   | SHAP analysis and evidence timeline          |
+|  8 | UEBA Intelligence     |    ✅   | Behavioral baseline and deviation tracking   |
+|  9 | Incident Alerts Queue |    ✅   | High-risk threat monitoring                  |
+| 10 | Executive Dashboard   |    ✅   | Enterprise-level threat statistics           |
+| 11 | Notifications & Flags |    ✅   | Automatic severity classification            |
+| 12 | Reports & Exports     |    ✅   | PDF and Excel generation                     |
+| 13 | Integration & Demo    |    ✅   | Full-stack end-to-end integration            |
+
+---
+
+## 🧰 Technology Stack
+
+| Layer             | Technologies                       |
+| ----------------- | ---------------------------------- |
+| Backend API       | Python 3.12, FastAPI, Uvicorn      |
+| API Communication | REST API, Server-Sent Events (SSE) |
+| Authentication    | OAuth2, JWT                        |
+| Data Validation   | Pydantic                           |
+| Machine Learning  | Scikit-learn                       |
+| ML Algorithm      | Gradient Boosting Classifier       |
+| Feature Scaling   | MinMaxScaler                       |
+| Data Processing   | Pandas, NumPy                      |
+| Explainable AI    | SHAP                               |
+| Frontend          | React.js 18                        |
+| UI                | HTML5, CSS3, Responsive Dark Theme |
+| PDF Generation    | ReportLab                          |
+| Excel Generation  | OpenPyXL                           |
+| Dataset           | CERT Insider Threat Dataset r4.2   |
+
+---
+
+## 📁 Repository Structure
+
+```text
+.
+├── backend/
 │   ├── app.py
-│   ├── dashboard.py
-│   ├── live_feature_engine.py
-│   ├── sample_data.py
-│   ├── stream_processor.py
-│   ├── user_activity.py
-│   ├── requirements.txt
-│   └── Dockerfile
+│   └── requirements.txt
 │
-├── dataset
-│   ├── logon_clean.csv
-│   ├── device_clean.csv
-│   ├── email_clean.csv
-│   ├── file_clean.csv
-│   ├── http_clean.csv
-│   ├── daily_user_features.csv
-│   ├── behavior_baseline.csv
-│   ├── behavior_deviation.csv
-│   ├── anomaly_results.csv
-│   ├── risk_scores.csv
-│   ├── explained_predictions.csv
-│   ├── high_risk_users.csv
-│   └── isolation_forest_model.pkl
-│
-├── ml_model
-│   ├── preprocess.py
-│   ├── feature_engineering.py
-│   ├── behavior_baseline.py
-│   ├── behavior_deviation.py
-│   ├── anomaly_detection.py
-│   ├── risk_scoring.py
-│   ├── explain_prediction.py
-│   ├── threat_investigation.py
-│   ├── train_and_save.py
+├── ml_model/
 │   ├── gb.pkl
 │   ├── scaler.pkl
-│   ├── feature_columns.pkl
-│   └── feature_means.pkl
+│   ├── feature_means.pkl
+│   └── feature_columns.pkl
 │
-├── frontend
-│   ├── src
-│   ├── public
-│   ├── package.json
-│   └── README.md
+├── dataset/
+│   └── daily_user_features.csv
 │
-└── docker-compose.yml
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Sidebar.js
+│   │   │   └── LoginPage.js
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── DashboardPage.js
+│   │   │   ├── LiveMonitoringPage.js
+│   │   │   ├── BehavioralProfilingPage.js
+│   │   │   ├── ThreatAlertsPage.js
+│   │   │   ├── InvestigationPage.js
+│   │   │   └── ReportsPage.js
+│   │   │
+│   │   └── App.js
+│   │
+│   └── package.json
+│
+└── README.md
 ```
 
 ---
 
-# ⚙️ Installation
+## ⚡ Installation & Setup
 
-### Clone Repository
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/Insider-Threat-Behavioral-Intelligence-System.git
-
+git clone <YOUR_REPOSITORY_URL>
 cd Insider-Threat-Behavioral-Intelligence-System
 ```
 
-### Backend
+### 2. Start the FastAPI Backend
+
+Open a new terminal and navigate to the backend:
 
 ```bash
 cd backend
+```
 
+Install dependencies:
+
+```bash
 pip install -r requirements.txt
-
-uvicorn app:app --reload
 ```
 
-Backend:
+Start the FastAPI server:
 
+```bash
+uvicorn app:app --reload --port 8000
 ```
-http://127.0.0.1:8000
+
+Backend API:
+
+```text
+http://localhost:8000
 ```
 
----
+Interactive API Documentation:
 
-### Frontend
+```text
+http://localhost:8000/docs
+```
+
+### 3. Launch React Security Console
+
+Open another terminal:
 
 ```bash
 cd frontend
+```
 
+Install dependencies:
+
+```bash
 npm install
+```
 
+Start the React development server:
+
+```bash
 npm start
 ```
 
-Frontend:
+Security Portal Console:
 
-```
+```text
 http://localhost:3000
 ```
 
 ---
 
-# 📡 API Endpoints
+## 🔗 Application URLs
 
-| Method | Endpoint | Description |
-|---------|----------|-------------|
-| GET | / | API Status |
-| POST | /token | User Authentication |
-| GET | /stream | Real-Time Prediction Stream |
-
----
-
-# 📊 Dashboard Features
-
-The React dashboard displays:
-
-- Total Processed Logs
-- Detected Anomalies
-- Critical Users
-- Risk Scores
-- Live Prediction Table
-- Real-Time Monitoring
+| Service                | URL                          |
+| ---------------------- | ---------------------------- |
+| React Security Console | `http://localhost:3000`      |
+| FastAPI Backend        | `http://localhost:8000`      |
+| FastAPI Swagger Docs   | `http://localhost:8000/docs` |
+| SSE Activity Stream    | `/stream`                    |
+| PDF Export             | `/api/v1/export/pdf`         |
+| Excel Export           | `/api/v1/export/excel`       |
 
 ---
 
-# 🐳 Docker Deployment
+## 🔌 API Endpoints
 
-```bash
-docker-compose up --build
+### Activity Stream
+
+```http
+GET /stream
+```
+
+Provides real-time activity updates using Server-Sent Events.
+
+### PDF Investigation Report
+
+```http
+GET /api/v1/export/pdf
+```
+
+Generates a user-specific investigation case file.
+
+### Excel Export
+
+```http
+GET /api/v1/export/excel
+```
+
+Exports relevant activity and risk information in Excel format.
+
+---
+
+## 📊 Data Flow
+
+```text
+CERT r4.2 Dataset
+        ↓
+Data Ingestion
+        ↓
+Feature Engineering
+        ↓
+Daily User Features
+        ↓
+Historical Behavioral Baselines
+        ↓
+Gradient Boosting Classifier
+        ↓
+UEBA Risk Engine
+        ↓
+Composite Risk Score
+        ↓
+Severity Classification
+        ↓
+Incident Alert Queue
+        ↓
+Threat Investigation
+        ↓
+PDF / Excel Reports
 ```
 
 ---
 
-# 🔮 Future Enhancements
+## 🎯 Project Objectives
 
-- JWT Authentication
-- Role-Based Access Control
-- Email Alert Notifications
-- SIEM Integration
-- SHAP-Based Explainable AI
-- Cloud Deployment (AWS/Azure)
-- Kafka-Based Real-Time Streaming
-- Advanced Threat Investigation Module
+The main objectives of this project are:
 
----
-
-# 📚 Dataset
-
-**CERT Insider Threat Dataset (CMU CERT)**
-
-The dataset contains enterprise activity logs including:
-
-- Logon Activities
-- Device Activities
-- File Operations
-- Email Communications
-- HTTP Browsing Records
+* To monitor employee behavioral activities.
+* To establish normal behavioral profiles for users.
+* To identify unusual activity patterns.
+* To detect potential insider threats using machine learning.
+* To calculate dynamic behavioral risk scores.
+* To provide explainable ML predictions using SHAP.
+* To generate real-time security alerts.
+* To assist analysts during forensic investigations.
+* To generate structured investigation reports.
+* To provide an integrated enterprise security monitoring console.
 
 ---
 
-# 👩‍💻 Developer
+## 🌟 Advantages
+
+* **AI-powered threat detection**
+* **Behavior-based monitoring**
+* **Dynamic risk scoring**
+* **Explainable AI**
+* **Real-time monitoring**
+* **Automated alert generation**
+* **Forensic investigation support**
+* **PDF and Excel reporting**
+* **Full-stack architecture**
+* **Enterprise-style security dashboard**
+
+---
+
+## 🔮 Future Enhancements
+
+Potential future improvements include:
+
+* Advanced deep learning-based behavioral detection
+* Real-time database integration
+* Email/SMS notification integration
+* More advanced anomaly detection algorithms
+* Automated incident response workflows
+* Cloud deployment using AWS
+* Docker containerization
+* Multi-organization support
+* Advanced threat correlation
+* Historical risk trend visualization
+
+---
+
+## 📚 Dataset
+
+This project uses the:
+
+**CERT Insider Threat Dataset r4.2**
+
+The dataset contains simulated employee activity logs covering multiple activity categories, including:
+
+* Logon
+* Device
+* File
+* Email
+* HTTP/Web activity
+
+The dataset is used for behavioral analysis, feature engineering, machine learning, and UEBA-based risk assessment.
+
+---
+
+## 🏁 Project Status
+
+**Status: ✅ Fully Implemented**
+
+The current version includes the complete workflow:
+
+```text
+Authentication
+      ↓
+Employee Monitoring
+      ↓
+Behavioral Profiling
+      ↓
+Anomaly Detection
+      ↓
+ML Threat Detection
+      ↓
+UEBA Risk Scoring
+      ↓
+Incident Alerts
+      ↓
+Threat Investigation
+      ↓
+Reports & Exports
+```
+
+---
+
+## 👩‍💻 Project Information
+
+### Enterprise Insider Threat UEBA Intelligence Platform
+
+**Technologies:**
+Python · FastAPI · React.js · Scikit-learn · SHAP · Pandas · NumPy · ReportLab · OpenPyXL
+
+**Dataset:**
+CERT Insider Threat Dataset r4.2
+
+---
+
+## ⭐ If You Find This Project Useful
+
+Give the repository a ⭐ and feel free to explore the implementation.
+
+---
+
+### Author
 
 **Vinothini R**
 
 B.Tech – Artificial Intelligence and Data Science
-
-
----
-
-# 📌 Project Highlights
-
-- AI-Based Insider Threat Detection
-- Behavioral Analytics
-- Machine Learning Pipeline
-- Explainable Predictions
-- Dynamic Risk Scoring
-- FastAPI Backend
-- React Frontend
-- Real-Time Monitoring Dashboard
-- Dockerized Deployment
