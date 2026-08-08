@@ -1,0 +1,10 @@
+dataset/
+ml_model/
+notebook/
+backend/venv/
+frontend/node_modules/
+venv/
+.venv/
+__pycache__/
+*.pyc
+.env
