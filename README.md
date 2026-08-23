@@ -324,6 +324,7 @@ The console uses a responsive dark cybersecurity-themed interface.
 
 ## 📁 Repository Structure
 
+```
 .
 ├── backend/
 │   ├── app.py
@@ -357,6 +358,7 @@ The console uses a responsive dark cybersecurity-themed interface.
 │   └── package.json
 │
 └── README.md
+```
 
 ---
 
