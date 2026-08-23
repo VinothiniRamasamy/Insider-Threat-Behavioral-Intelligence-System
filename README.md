@@ -324,41 +324,39 @@ The console uses a responsive dark cybersecurity-themed interface.
 
 ## 📁 Repository Structure
 
-
 .
 ├── backend/
-│ ├── app.py
-│ └── requirements.txt
+│   ├── app.py
+│   └── requirements.txt
 │
 ├── ml_model/
-│ ├── gb.pkl
-│ ├── scaler.pkl
-│ ├── feature_means.pkl
-│ └── feature_columns.pkl
+│   ├── gb.pkl
+│   ├── scaler.pkl
+│   ├── feature_means.pkl
+│   └── feature_columns.pkl
 │
 ├── dataset/
-│ └── daily_user_features.csv
+│   └── daily_user_features.csv
 │
 ├── frontend/
-│ ├── src/
-│ │ ├── components/
-│ │ │ ├── Sidebar.js
-│ │ │ └── LoginPage.js
-│ │ │
-│ │ ├── pages/
-│ │ │ ├── DashboardPage.js
-│ │ │ ├── LiveMonitoringPage.js
-│ │ │ ├── BehavioralProfilingPage.js
-│ │ │ ├── ThreatAlertsPage.js
-│ │ │ ├── InvestigationPage.js
-│ │ │ └── ReportsPage.js
-│ │ │
-│ │ └── App.js
-│ │
-│ └── package.json
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Sidebar.js
+│   │   │   └── LoginPage.js
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── DashboardPage.js
+│   │   │   ├── LiveMonitoringPage.js
+│   │   │   ├── BehavioralProfilingPage.js
+│   │   │   ├── ThreatAlertsPage.js
+│   │   │   ├── InvestigationPage.js
+│   │   │   └── ReportsPage.js
+│   │   │
+│   │   └── App.js
+│   │
+│   └── package.json
 │
 └── README.md
-
 
 ---
 
